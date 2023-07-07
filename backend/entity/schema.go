@@ -14,7 +14,7 @@ type Equipment struct {
 	gorm.Model
 	Equipments string
 
-	Reservation []Reservation `gorm:"foreignKey:ReservationID"`
+	Reservation []Reservation `gorm:"foreignKey:EquipmentID"`
 }
 
 // Gender
@@ -22,7 +22,7 @@ type Gender struct {
 	gorm.Model
 	Gender string
 
-	User []User `gorm:"foreignKey:UserID"`
+	User []User `gorm:"foreignKey:GenderID"`
 }
 
 // User
@@ -39,7 +39,7 @@ type User struct {
 	GenderID *uint
 	Gender   Gender
 
-	Reservation []Reservation `gorm:"foreignKey:ReservationID"`
+	Reservation []Reservation `gorm:"foreignKey:UserID"`
 }
 
 // Reservation
