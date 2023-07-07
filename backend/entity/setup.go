@@ -22,7 +22,7 @@ func SetupDatabase() {
 	}
 	database.AutoMigrate(
 		&Equipment{},
-		Gender{},
+		&Gender{},
 		&User{},
 		&Reservation{},
 	)
@@ -122,12 +122,12 @@ func SetupDatabase() {
 
 	//gender
 	male := Gender{
-		Sex: "Male",
+		Gender: "Male",
 	}
 	db.Model(&Gender{}).Create(male)
 
 	female := Gender{
-		Sex: "Female",
+		Gender: "Female",
 	}
 	db.Model(&Gender{}).Create(female)
 

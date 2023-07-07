@@ -20,7 +20,7 @@ type Equipment struct {
 // Gender
 type Gender struct {
 	gorm.Model
-	Sex string
+	Gender string
 
 	User []User `gorm:"foreignKey:UserID"`
 }
