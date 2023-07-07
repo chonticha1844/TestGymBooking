@@ -139,7 +139,7 @@ func DeleteUser(c *gin.Context) {
 	id := c.Param("id")
 
 	//ลบเมื่อ
-	if err := entity.DB().Exec("DELETE FROM fictions WHERE user_id = ?", id).Error; err != nil {
+	if err := entity.DB().Exec("DELETE FROM users WHERE user_id = ?", id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
