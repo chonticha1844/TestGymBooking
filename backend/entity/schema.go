@@ -28,7 +28,7 @@ type Gender struct {
 // User
 type User struct {
 	gorm.Model
-	Username string
+	Username string `gorm:"uniqueIndex"`
 	Gmail    string
 	Password string
 	Fullname string
@@ -37,7 +37,7 @@ type User struct {
 	Height   int32
 
 	GenderID *uint
-	Gender   Gender
+	Gender   Gender `gorm:"references:id"`
 
 	Reservation []Reservation `gorm:"foreignKey:UserID"`
 }
@@ -48,7 +48,7 @@ type Reservation struct {
 	Datetime time.Time
 
 	UserID      *uint
-	User        User
+	User        User `gorm:"references:id"`
 	EquipmentID *uint
-	Equipment   Equipment
+	Equipment   Equipment `gorm:"references:id"`
 }
