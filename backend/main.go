@@ -20,8 +20,8 @@ func main() {
 	r.GET("//genders", controller.ListGenders)
 	r.GET("/users", controller.ListUsers)
 
-	// // Authentication Routes
-	// r.POST("/login/admin", controller.LoginUser)
+	// Authentication Routes
+	r.POST("/login/admin", controller.LoginUser)
 
 	api := r.Group("")
 	{
