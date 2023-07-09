@@ -13,6 +13,7 @@ import (
 type Equipment struct {
 	gorm.Model
 	Equipments string
+	picture    string
 
 	Reservation []Reservation `gorm:"foreignKey:EquipmentID"`
 }
