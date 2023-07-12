@@ -44,7 +44,7 @@ func SetupDatabase() {
 	//User
 	user1 := User{
 		Username: "B1234567",
-		Gmail:    "B1234567@g.sut.ac.th",
+		Email:    "B1234567@g.sut.ac.th",
 		Password: "1234567890123",
 		Fullname: "Tom Highway",
 		Age:      21,
@@ -57,7 +57,7 @@ func SetupDatabase() {
 
 	user2 := User{
 		Username: "D1472583",
-		Gmail:    "D1472583@g.sut.ac.th",
+		Email:    "D1472583@g.sut.ac.th",
 		Password: "2345678901234",
 		Fullname: "Malisa Somalia",
 		Age:      30,

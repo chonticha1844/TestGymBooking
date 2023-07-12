@@ -38,7 +38,7 @@ func CreateUser(c *gin.Context) {
 	// 14: สร้าง  user
 	usr := entity.User{
 		Username: user.Username,
-		Gmail:    user.Gmail,
+		Email:    user.Email,
 		// Password:        string(hashPassword),
 		Gender:   gender,
 		Fullname: user.Fullname,
@@ -102,7 +102,7 @@ func UpdateUser(c *gin.Context) {
 
 	update_user := entity.User{
 		Username: user.Username,
-		Gmail:    user.Gmail,
+		Email:    user.Email,
 		// Password:        string(hashPassword),
 		Gender:   gender,
 		Fullname: user.Fullname,
