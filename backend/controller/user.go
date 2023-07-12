@@ -3,14 +3,14 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/chonticha1844/TestGymBooking/entity"
-	//"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	//"golang.org/x/crypto/bcrypt"
+	"golang.org/x/crypto/bcrypt"
 	//"gorm.io/gorm"
 )
 
-// POST /writers
+// POST /users
 
 func CreateUser(c *gin.Context) {
 
@@ -28,18 +28,18 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 
-	// // เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	// hashPassword, err := bcrypt.GenerateFromPassword([]byte(writer.Password), 14)
-	// if err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-	// 	return
-	// }
+	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
 
 	// 14: สร้าง  user
 	usr := entity.User{
 		Username: user.Username,
 		Email:    user.Email,
-		// Password:        string(hashPassword),
+		Password: string(hashPassword),
 		Gender:   gender,
 		Fullname: user.Fullname,
 		Age:      user.Age,
@@ -47,11 +47,11 @@ func CreateUser(c *gin.Context) {
 		Height:   user.Height,
 	}
 
-	// // การ validate
-	// if _, err := govalidator.ValidateStruct(user); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+	// การ validate
+	if _, err := govalidator.ValidateStruct(user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// 13: บันทึก
 	if err := entity.DB().Create(&usr).Error; err != nil {
@@ -103,7 +103,7 @@ func UpdateUser(c *gin.Context) {
 	update_user := entity.User{
 		Username: user.Username,
 		Email:    user.Email,
-		// Password:        string(hashPassword),
+		Password: user.Password,
 		Gender:   gender,
 		Fullname: user.Fullname,
 		Age:      user.Age,
@@ -111,21 +111,21 @@ func UpdateUser(c *gin.Context) {
 		Height:   user.Height,
 	}
 
-	// // การ validate
-	// if _, err := govalidator.ValidateStruct(update_user); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+	// การ validate
+	if _, err := govalidator.ValidateStruct(update_user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
-	// if !(user.Password[0:13] == "$2a$14$") {
-	// 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
-	// 	if err != nil {
-	// 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
-	// 		return
+	if !(user.Password[0:13] == "$2a$14$") {
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), 14)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+			return
 
-	// 	}
-	// 	update_user.Password = string(hashPassword)
-	// }
+		}
+		update_user.Password = string(hashPassword)
+	}
 
 	if tx := entity.DB().Where("id = ?", user.ID).Updates(&update_user).Error; tx != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": tx.Error()})

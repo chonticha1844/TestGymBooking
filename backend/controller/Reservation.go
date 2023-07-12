@@ -3,14 +3,13 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/chonticha1844/TestGymBooking/entity"
-	//"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
-	//"golang.org/x/crypto/bcrypt"
 	//"gorm.io/gorm"
 )
 
-// POST /writers
+// POST /reservation
 
 func CreateReservation(c *gin.Context) {
 
@@ -42,11 +41,11 @@ func CreateReservation(c *gin.Context) {
 		Equipment: equipment,
 	}
 
-	// // การ validate
-	// if _, err := govalidator.ValidateStruct(user); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+	// การ validate
+	if _, err := govalidator.ValidateStruct(user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// 13: บันทึก
 	if err := entity.DB().Create(&rsv).Error; err != nil {
